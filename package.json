@@ -1,0 +1,70 @@
+{
+  "name": "string-check",
+  "version": "1.0.0",
+  "description": "扫描前端打包产物中存在风险的 URL，并可选择性地清理它们。",
+  "type": "module",
+  "main": "./dist/lib/scanner.cjs",
+  "module": "./dist/lib/scanner.js",
+  "exports": {
+    ".": {
+      "import": "./dist/lib/scanner.js",
+      "require": "./dist/lib/scanner.cjs"
+    },
+    "./webpack-plugin": {
+      "import": "./dist/webpack-plugin.js",
+      "require": "./dist/webpack-plugin.cjs"
+    },
+    "./lib/scanner": {
+      "import": "./dist/lib/scanner.js",
+      "require": "./dist/lib/scanner.cjs"
+    }
+  },
+  "bin": {
+    "string-check": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup && node -e \"require('fs').copyFileSync('src/risk-urls.js','dist/risk-urls.js')\"",
+    "prepublishOnly": "npm run build",
+    "check": "node dist/index.js",
+    "clean": "node dist/index.js --replace",
+    "check:config": "node dist/index.js --config ./dist/risk-urls.js",
+    "clean:config": "node dist/index.js --replace --config ./dist/risk-urls.js"
+  },
+  "keywords": [
+    "security",
+    "scan",
+    "url",
+    "frontend",
+    "webpack",
+    "webpack-plugin"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "peerDependencies": {
+    "webpack": "^4.0.0 || ^5.0.0",
+    "webpack-sources": "^1.0.0 || ^2.0.0 || ^3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "webpack": {
+      "optional": true
+    },
+    "webpack-sources": {
+      "optional": true
+    }
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "WEBPACK_PLUGIN.md"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.19.25",
+    "@types/webpack": "^5.28.5",
+    "@types/webpack-sources": "^3.2.3",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  }
+}
