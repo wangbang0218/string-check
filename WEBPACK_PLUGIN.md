@@ -81,6 +81,8 @@ new StringCheckPlugin({
 })
 ```
 
+> CommonJS 构建配置（未启用 `type: "module"`）请将风险列表保存为 `.cjs` 文件或直接引用包内的 `dist/risk-urls.cjs`，内容可通过 `module.exports = [...]` 导出。
+
 ### `replace`
 - **类型**: `boolean`
 - **默认值**: `false`

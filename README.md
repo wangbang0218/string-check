@@ -67,7 +67,7 @@ npx string-check ./build         # 使用 CLI 工具
 ### 参数说明
 - `--replace`/`-r`：开启替换，将命中的 URL 替换为空字符串
 - `--dry-run`/`-d`：与 `--replace` 配合使用，仅打印修改计划，不落盘
-- `--config <path>`/`-c <path>`：指定包含风险 URL 的 JSON/JS 文件，默认使用 `dist/risk-urls.js`
+- `--config <path>`/`-c <path>`：指定包含风险 URL 的 JSON/JS 文件，默认使用 `dist/risk-urls.js`（CommonJS 项目可引用 `dist/risk-urls.cjs`）
 
 ## 配置风险 URL 列表
 默认配置写在 `src/risk-urls.js` 中，内容可以是简单的字符串数组，或是包含 `urls` 字段的对象，例如：
@@ -94,6 +94,16 @@ npx string-check ./build         # 使用 CLI 工具
 
 ```js
 export const urls = [
+  "https://example.com/license",
+  "https://tracking.example.com"
+];
+```
+
+> ⚠️ 没有启用 ESM (`package.json` 中缺少 `type: "module"`) 的项目，请将配置文件保存为 `.cjs` 并使用 CommonJS 导出，或直接引用包内的 `dist/risk-urls.cjs`：
+
+```js
+// configs/risk-urls.cjs
+module.exports = [
   "https://example.com/license",
   "https://tracking.example.com"
 ];
@@ -312,3 +322,4 @@ npm publish
 - `dist/index.js` - CLI 入口（仅 ESM，支持 top-level await）
 - `dist/index.d.ts` - CLI 类型声明
 - `dist/risk-urls.js` - 默认配置文件
+- `dist/risk-urls.cjs` - CommonJS 版本的默认配置

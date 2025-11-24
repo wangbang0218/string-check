@@ -23,7 +23,7 @@
     "string-check": "./dist/index.js"
   },
   "scripts": {
-    "build": "tsup && node -e \"require('fs').copyFileSync('src/risk-urls.js','dist/risk-urls.js')\"",
+    "build": "tsup && node scripts/build-risk-urls.js",
     "prepublishOnly": "npm run build",
     "check": "node dist/index.js",
     "clean": "node dist/index.js --replace",
